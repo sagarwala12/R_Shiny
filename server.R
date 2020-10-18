@@ -16,6 +16,7 @@ output$bar1 <- renderGvis({
                             titleTextStyle="{color:'Black',fontName:'Courier',fontSize:16}",
                             width="1500", height="500",
                             legend = "bottom",
+                            explorer="{actions:['dragToZoom', 'rightClickToReset']}",
                             bar="{groupWidth:'100%'}")
                )
   
@@ -26,7 +27,7 @@ output$map <- renderGvis({
   gvisGeoChart(state_stat, "state.name", input$selected,
                options=list(region="US", displayMode="regions",
                             resolution="provinces",
-                            width="auto", height="auto"))
+                            width="1500", height="500"))
   # using width="auto" and height="auto" to
   # automatically adjust the map size
 })
@@ -42,6 +43,18 @@ output$table <- DT::renderDataTable({
                 background="skyblue", fontWeight='bold')
   # Highlight selected column using formatStyle
 })
+
+output$demographics <- renderPlotly({
+  #fit <- reactive({lm(data[x] ~ data[y])})
+  data %>%
+    ggplot(., aes(label = Zip)) +
+    geom_point(aes_string(x=input$x, y=input$y)) +
+    ggtitle('Demographics and Covid-19') +
+    xlab(switch(input$x, 'Median.Household.Income' = 'Median Household Income', 'Percent_College' = 'Percent Bachelors Degree or Higher', 'Percent_Public_Transit' = 'Percent Taking Public Transit', 'Percent_Crowded' = 'Crowded Housing(Percent of population living in crowded housing)')) +
+    ylab(switch(input$y, 'Percent.Population' = 'Percent Tested Population Positive for Covid-19', 'Positive'='Total Positive', 'Total_Tests' = 'Total Tests'))
+  #abline(fit())  
+})
+
 }
 
 

@@ -60,16 +60,24 @@ shinyUI(dashboardPage(skin = "blue",
                         tabItem(tabName = 'graphs', 
                                 h2('Comparison of Covid-19 Data Based on County Demographics'),
                                 h3('Bar Plot of Age Demographic'),
+                                h4('-Drag and click to zoom, right click to reset'),
                                 fluidRow(
                                   box(htmlOutput('bar1'), width = "auto")
                                 
-                                  )
+                                  ),
+                                h3('As you can see,')
                                 ),
                         
                          tabItem(tabName = 'map',
                             h2('Map of Coronavirus Data'),
                             fluidRow(
-                              box(htmlOutput("map")),
+                              box(htmlOutput("map"), width = "auto"),
+                              h3(' '),
+                              br(),
+                              br(),
+                              br(),
+                              br(),
+                              h3('histogram'),
                               # gvisHistoGram
                               box(htmlOutput("hist")))),
                         tabItem(tabName = "data",
