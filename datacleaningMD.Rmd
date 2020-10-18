@@ -1,0 +1,66 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+
+
+
+```{r}
+library(googleVis)
+library(tidyverse)
+library(dplyr)
+cases_state <- read.csv('./data/statewide_cases.csv')
+state_test <- read.csv('./data/statewide_testing.csv')
+cases_age <- read.csv('./data/case_demographics_age.csv')
+cases_ethnic<- read.csv('./data/case_demographics_ethnicity.csv')
+cases_sex <- read.csv('./data/case_demographics_sex.csv')
+hospitals <- read.csv('./data/hospitals_by_county.csv')
+
+
+#indexing age, sex, ethnic background to cases statewide. By using the date as ID we can create separate data frames of each factor by the county it was located within.
+ca_age <- merge(cases_state, cases_age, by = "date")
+
+ca_sex <- merge(cases_state, cases_sex, by = "date") 
+
+ca_ethnic <- merge(cases_state, cases_ethnic, by = "date")
+
+```
+
+
+```{r Plot for number of tested}
+state_test_line <- gvisLineChart(state_test[,c("date", "tested")])
+plot(state_test_line)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
