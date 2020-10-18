@@ -11,7 +11,7 @@ shinyUI(dashboardPage(skin = "blue",
                           menuItem("Introduction",
                             tabName = 'intro', icon = icon('check')),
                           
-                          menuItem("Interactive Covid-19 Tracker",
+                          menuItem("Interactive Plots",
                                    tabName = 'graphs', icon = icon('ambulance')),
                           
                           menuItem("Map Visualization",
@@ -46,15 +46,25 @@ shinyUI(dashboardPage(skin = "blue",
                      tabItems(
                         tabItem(tabName = 'intro',
                             h2('How do Age, Sex, and Ethnicity influence the spread of COVID-19 in California? '),
-                            h3('Common Belief: Los Angeles has so many Covid-19 cases because it is a very dense city.'),
-                            h4('However, when we try to relate the severity to density we do not find any correlation.'),
-                            box(plotlyOutput('density'), width = 8),
+                            h3('Within the past year COVID has taken the world by suprise '),
+                            h3('California in particular was hit hard'),
+                            h4('As testing increased over time, more information was gathered'),
+                            box(htmlOutput("line1"), width = "auto"),
+                            h3(' '),
                             h3('So what does influence Covid-19 infection rates?'),
-                            h3('-Age'),
-                            h3('-Sex'),
-                            h3('-Ethnicity'),
-                            h3('-Housing')
-                        ),
+                            h3('We will observe the following factors:'),
+                            h4('-Age'),
+                            h4('-Sex'),
+                            h4('-Ethnicity')
+                          ),
+                        tabItem(tabName = 'graphs', 
+                                h2('Comparison of Covid-19 Data Based on County Demographics'),
+                                h3('Bar Plot of Age Demographic'),
+                                fluidRow(
+                                  box(htmlOutput('bar1'), width = "auto")
+                                
+                                  )
+                                ),
                         
                          tabItem(tabName = 'map',
                             h2('Map of Coronavirus Data'),
@@ -66,5 +76,6 @@ shinyUI(dashboardPage(skin = "blue",
                                 # datatable
                                 fluidRow(box(DT::dataTableOutput("table"))))
                      ))
-))
+)
+)
                         
