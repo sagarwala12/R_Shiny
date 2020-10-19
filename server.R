@@ -34,10 +34,20 @@ output$bar2 <- renderGvis({
   
 })
 output$tb1 <- renderGvis({
-  gvisTable(cases_state, options=list(page='enable', height=400))
+  gvisTable(cases_state, options=list(page='enable', width = 1500, height=400))
 })
 
+output$tb2 <- renderGvis({
+  gvisTable(ca_age, options=list(page='enable', width = 1500, height=400))
+})
 
+output$tb3 <- renderGvis({
+  gvisTable(ca_ethnic, options=list(page='enable', width = 1500, height=400))
+})
+
+output$tb4 <- renderGvis({
+  gvisTable(ca_sex, options=list(page='enable', width = 1500, height=400))
+})
 
 output$combo1 <- renderGvis({
   gvisComboChart(ethnic_plot, xvar="race_ethnicity", yvar=c("cases", "deaths"),

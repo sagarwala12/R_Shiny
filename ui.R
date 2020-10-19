@@ -84,6 +84,7 @@ shinyUI(dashboardPage(skin = "blue",
                                 h4('- Most likely factor is that latino population are promintely in the service industry'),
                                 h4('- Latinos tend to live with lots of family members, more likely to come into contact and spread'),
                                 h4('- Like many other colored demographics in the US, less likely to have access to affordable healthcare'),
+                                h4('Latinos in California have a death rate of over 5%, with African americans behind them at 3%'),
                                 br(),
                                 br(),
                                 br(),
@@ -121,11 +122,30 @@ shinyUI(dashboardPage(skin = "blue",
                                 h2('Data Table by County'),
                                 h3('Cases State Wide'),
                                 fluidRow(
-                                  box(htmlOutput('tb1'), width = "auto")
+                                  box(htmlOutput('tb1'), width = "1500")
                                 
+                                ),
+                                br(),
+                                br(),
+                                h3('Cases By Age'),
+                                fluidRow(
+                                  box(htmlOutput('tb2'), width = "1500")
+                                ),
+                                br(),
+                                br(),
+                                h3('Cases by Race'),
+                                fluidRow(
+                                  box(htmlOutput('tb3'), width = "1500")
+                                ),
+                                br(),
+                                br(),
+                                h3('Cases by Gender'),
+                                fluidRow(
+                                  box(htmlOutput('tb4'), width = "1500")
+                                )
                                 ))
                      ))
 )
-)
+
 
                         
