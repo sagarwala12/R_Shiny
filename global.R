@@ -120,6 +120,7 @@ rownames(cases_state) <- NULL
 choice<- colnames(cases_state)[-1]
 
 
+
 ##############################################
 #Map of California by county
 

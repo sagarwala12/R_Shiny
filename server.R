@@ -50,6 +50,17 @@ output$tb4 <- renderGvis({
   gvisTable(ca_sex, options=list(page='enable', width = 1500, height=400))
 })
 
+output$tbsex <- renderGvis({
+  gvisTable(sex_plot, options=list(page='enable', width = "auto", height="auto"))
+})
+output$tbethnic <- renderGvis({
+  gvisTable(ethnic_plot, options=list(page='enable', width = "auto", height="auto"))
+})
+
+output$tbage <- renderGvis({
+  gvisTable(age_plot, options=list(page='enable', width = "auto", height="auto"))
+})
+
 output$combo1 <- renderGvis({
   gvisComboChart(ethnic_plot, xvar="race_ethnicity", yvar=c("cases", "deaths"),
                  options=list(title="Ethnic Demographic",
