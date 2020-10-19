@@ -21,9 +21,79 @@ output$bar1 <- renderGvis({
                )
   
 })
-  
 
-output$map <- renderGvis({
+output$bar2 <- renderGvis({
+  gvisBarChart(sex_plot, xvar="sex", yvar=c("totalpositive2", "deaths"),
+               options=list(title="Gender Demographics",
+                            titleTextStyle="{color:'Black',fontName:'Courier',fontSize:16}",
+                            width="1500", height="500",
+                            legend = "bottom",
+                            explorer="{actions:['dragToZoom', 'rightClickToReset']}",
+                            bar="{groupWidth:'100%'}")
+  )
+  
+})
+output$tb1 <- renderGvis({
+  gvisTable(cases_state, options=list(page='enable', height=400))
+})
+
+
+
+output$combo1 <- renderGvis({
+  gvisComboChart(ethnic_plot, xvar="race_ethnicity", yvar=c("cases", "deaths"),
+                 options=list(title="Ethnic Demographic",
+                              explorer="{actions:['dragToZoom', 'rightClickToReset']}",
+                              titleTextStyle="{color:'black',
+                                              fontName:'Courier',
+                                              fontSize:16}",
+                              curveType="function", 
+                              pointSize=9,
+                              seriesType="bars",
+                              series="[{type:'line', 
+                                       targetAxisIndex:0,
+                                       color:'red'}, 
+                                      {type:'bars', 
+                                       targetAxisIndex:1,
+                                       color:'grey'}]",
+                              vAxes="[{title:'cases',
+                                      titleTextStyle: {color: 'red'},
+                                      textStyle:{color: 'black'},
+                                      textPosition: 'out'}, 
+                                     {title:'deaths',
+                                      format:'#,###',
+                                      titleTextStyle: {color: 'grey'},
+                                      textStyle:{color: 'grey'},
+                                      textPosition: 'out',
+                                      minValue:0}]",
+                              hAxes="[{title:'Race',
+                                      textPosition: 'out'}]",
+                              width=1500, height=500
+                 ), 
+                 chartid="twoaxiscombochart"
+  )
+})
+
+output$map <- renderLeaflet({
+  leaflet(state_stat, "county.1", input$selected) %>% 
+    addTiles() %>% 
+    addPolygons(data = shape, 
+                fillColor = "aliceblue", 
+                color = "white",
+                layerId = ~COUNTYNS)
+})
+
+
+observe({ 
+  event <- input$map_shape_click
+  output$cnty <- renderText(shape$NAMELSAD[shape$COUNTYNS == event$id])
+  
+  event2 <- input$selected
+  
+  
+})
+
+
+output$map2 <- renderGvis({
   gvisGeoChart(state_stat, "state.name", input$selected,
                options=list(region="US", displayMode="regions",
                             resolution="provinces",
@@ -31,31 +101,13 @@ output$map <- renderGvis({
   # using width="auto" and height="auto" to
   # automatically adjust the map size
 })
-# show histogram using googleVis
-output$hist <- renderGvis(
-  gvisHistogram(state_stat[,input$selected, drop=FALSE]))
 
 
 
-output$table <- DT::renderDataTable({
-  datatable(state_stat, rownames=FALSE) %>%
-    formatStyle(input$selected,
-                background="skyblue", fontWeight='bold')
-  # Highlight selected column using formatStyle
-})
-
-output$demographics <- renderPlotly({
-  #fit <- reactive({lm(data[x] ~ data[y])})
-  data %>%
-    ggplot(., aes(label = Zip)) +
-    geom_point(aes_string(x=input$x, y=input$y)) +
-    ggtitle('Demographics and Covid-19') +
-    xlab(switch(input$x, 'Median.Household.Income' = 'Median Household Income', 'Percent_College' = 'Percent Bachelors Degree or Higher', 'Percent_Public_Transit' = 'Percent Taking Public Transit', 'Percent_Crowded' = 'Crowded Housing(Percent of population living in crowded housing)')) +
-    ylab(switch(input$y, 'Percent.Population' = 'Percent Tested Population Positive for Covid-19', 'Positive'='Total Positive', 'Total_Tests' = 'Total Tests'))
-  #abline(fit())  
-})
 
 }
+
+
 
 
 

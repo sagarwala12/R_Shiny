@@ -18,17 +18,15 @@ shinyUI(dashboardPage(skin = "blue",
                                    tabName = "map", icon = icon("map")),
                           
                           menuItem("County Data", 
-                          tabName = "Boro", icon = icon("apple-alt")),
+                          tabName = "cnty", icon = icon("apple-alt")),
               
-                          menuItem("Conclusion and Credits" , 
-                                   tabName = "info", icon = icon("address-card")),
+                          
                           
                           selectizeInput("selected",
                                          "select Item to Display",
                                          choice)
                           
-                          #menuItem("About Me", 
-                                   #tabName = "Me", icon = icon("address-card"))
+                          
                         )
                       ), 
                       dashboardBody(
@@ -45,10 +43,11 @@ shinyUI(dashboardPage(skin = "blue",
                         ),
                      tabItems(
                         tabItem(tabName = 'intro',
-                            h2('How do Age, Sex, and Ethnicity influence the spread of COVID-19 in California? '),
-                            h3('Within the past year COVID has taken the world by suprise '),
+                            h2('Do Age, Sex, and Ethnicity influence the spread of COVID-19 in California? '),
+                            h3('For nearly a year COVID has plauged us '),
                             h3('California in particular was hit hard'),
-                            h4('As testing increased over time, more information was gathered'),
+                            h4('Previously due to lack of testing it was difficult to drawn conclusions or look for trends in data'),
+                            h4('As testing increased over time, more information has been gathered'),
                             box(htmlOutput("line1"), width = "auto"),
                             h3(' '),
                             h3('So what does influence Covid-19 infection rates?'),
@@ -59,31 +58,63 @@ shinyUI(dashboardPage(skin = "blue",
                           ),
                         tabItem(tabName = 'graphs', 
                                 h2('Comparison of Covid-19 Data Based on County Demographics'),
-                                h3('Bar Plot of Age Demographic'),
+                                h3('Bar Plot of Gender Demographic'),
                                 h4('-Drag and click to zoom, right click to reset'),
                                 fluidRow(
-                                  box(htmlOutput('bar1'), width = "auto")
+                                  box(htmlOutput('bar2'), width = "auto")
+                                  
+                                ),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                                h3('Combonation Chart of Race Demographic'),
+                        
+                                fluidRow(
+                                  box(htmlOutput('combo1'), width = "auto")
                                 
                                   ),
-                                h3('As you can see,')
+                                h4('Why do Latinos suffer so much? - This is largely due to the fact that latinos predominately work in the service industry and tend to live in large family household setting'),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                             
+                              
+                                h3('Bar Plot of Age Demographic'),
+                                fluidRow(
+                                  box(htmlOutput('bar1'), width = "auto")
+                                  
+                                  ),
+                               
+                           
+                                
                                 ),
                         
                          tabItem(tabName = 'map',
                             h2('Map of Coronavirus Data'),
                             fluidRow(
-                              box(htmlOutput("map"), width = "auto"),
+                              box(leafletOutput("map"), width = "auto"),
+                              box(textOutput("cnty")),
                               h3(' '),
                               br(),
                               br(),
                               br(),
                               br(),
-                              h3('histogram'),
-                              # gvisHistoGram
-                              box(htmlOutput("hist")))),
-                        tabItem(tabName = "data",
-                                # datatable
-                                fluidRow(box(DT::dataTableOutput("table"))))
+                            )),
+                        tabItem(tabName = 'cnty',
+                                h2('Data Table by County'),
+                                h3('Cases State Wide'),
+                                fluidRow(
+                                  box(htmlOutput('tb1'), width = "auto")
+                                
+                                ))
                      ))
 )
 )
+
                         

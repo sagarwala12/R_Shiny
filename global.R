@@ -3,7 +3,7 @@
 ################################################
 #Libraries
 
-library(rCharts)
+
 library(shiny)
 library(tidyverse)
 library(shinydashboard)
@@ -12,6 +12,7 @@ library(tigris)
 library(dplyr)
 library(ggplot2)
 library(leaflet)
+library(sf)
 library(plotly)
 library(leaflet.providers)
 library(googleVis)
@@ -26,8 +27,8 @@ state_test <- read.csv('./data/statewide_testing.csv')
 cases_age <- read.csv('./data/case_demographics_age.csv')
 cases_ethnic<- read.csv('./data/case_demographics_ethnicity.csv')
 cases_sex <- read.csv('./data/case_demographics_sex.csv')
-hospitals <- read.csv('./data/hospitals_by_county.csv')
-county_list <- read.csv('./data/county-list.csv')
+#hospitals <- read.csv('./data/hospitals_by_county.csv')
+
 
 
 ################################################
@@ -90,19 +91,37 @@ ethnic_plotc <-ethnic_plot %>%
 ethnic_plot <- merge(ethnic_plota, ethnic_plotb, by = "race_ethnicity")
 ethnic_plot <- merge(ethnic_plot, ethnic_plotc, by = "race_ethnicity")
 
+###############################################
+#Create Genders Plot
+
+sex_plot <- select(cases_sex, "sex", "totalpositive2", "deaths")
+sex_plota <- sex_plot %>% 
+  group_by(sex) %>% 
+  summarise_at(vars(totalpositive2),
+               list(totalpositive2 = sum))
+sex_plotb <- sex_plot %>% 
+  group_by(sex) %>% 
+  summarise_at("deaths",
+               funs(deaths = sum),
+               na.rm=TRUE)
+
+
+
+sex_plot <- merge(sex_plota, sex_plotb, by = "sex")
+
 
 
 ###############################################
 #temp 
 
-state_stat <- data.frame(state.name = rownames(state.x77), state.x77)
-# remove row names
-rownames(state_stat) <- NULL
-# create variable with colnames as choice
-choice <- colnames(state_stat)[-1]
+state_stat <- data.frame(county = rownames(cases_state), cases_state)
+rownames(cases_state) <- NULL
+choice<- colnames(cases_state)[-1]
 
 
+##############################################
+#Map of California by county
 
-
+shape <- tigris::counties(state = "CA", class = "sf")
 
 

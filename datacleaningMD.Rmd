@@ -112,6 +112,23 @@ n1
 ```
 
 
+
+
+```{r}
+require(rCharts)
+n2=nPlot(cases ~ race_ethnicity, group = 'race_ethnicity', type = 'multiBarChart', data = ethnic_plot)
+n2
+```
+
+
+
+
+
+
+
+
+
+
 ```{r}
 
 
@@ -193,4 +210,251 @@ plot(Bar3)
 #                        options=list(hAxis="{format:'#,###%'}"))
 # plot(Bar4)
 ```
+
+
+
+
+
+```{r}
+library(googleVis)
+df <- data.frame(Date=as.Date(c(Sys.Date()+c(1,30,80))),
+                 Percent=c(0.1,0.3,0.4), 
+                 Millions=c(230000,120000,320000))
+cmb <- 
+  gvisComboChart(ethnic_plot, xvar="race_ethnicity", yvar=c("cases", "deaths"),
+                options=list(title="Ethnic Demographic",
+                             titleTextStyle="{color:'black',
+                                              fontName:'Courier',
+                                              fontSize:16}",
+                             curveType="function", 
+                             pointSize=9,
+                             seriesType="bars",
+                             series="[{type:'line', 
+                                       targetAxisIndex:0,
+                                       color:'red'}, 
+                                      {type:'bars', 
+                                       targetAxisIndex:1,
+                                       color:'grey'}]",
+                             vAxes="[{title:'cases',
+                                      titleTextStyle: {color: 'red'},
+                                      textStyle:{color: 'black'},
+                                      textPosition: 'out'}, 
+                                     {title:'deaths',
+                                      format:'#,###',
+                                      titleTextStyle: {color: 'grey'},
+                                      textStyle:{color: 'grey'},
+                                      textPosition: 'out',
+                                      minValue:0}]",
+                             hAxes="[{title:'Race',
+                                      textPosition: 'out'}]",
+                             width=1000, height=500
+                ), 
+                 chartid="twoaxiscombochart"
+  )
+plot(cmb)
+```
+
+
+
+
+```{r}
+df=data.frame(country=c("US", "GB", "BR"), val1=c(1,3,4), val2=c(23,12,32))
+
+## Column chart
+Col1 <- gvisColumnChart(df, xvar="country", yvar=c("val1", "val2"))
+plot(Col1)
+
+## Stacked column chart
+Col2 <- gvisColumnChart(df, xvar="country", yvar=c("val1", "val2"),
+     options=list(isStacked=TRUE))
+plot(Col2)
+
+
+## Add a customised title and and change width of columns
+Col3 <- gvisColumnChart(df, xvar="country", yvar=c("val1", "val2"),
+             options=list(title="Hello World",
+                          titleTextStyle="{color:'red',fontName:'Courier',fontSize:16}",
+                          bar="{groupWidth:'100%'}"))
+plot(Col3)
+
+## Not run: 
+# ## Change y-axis to percentages
+Col4 <- gvisColumnChart(df, xvar="country", yvar=c("val1", "val2"),
+                        options=list(vAxis="{format:'#,###%'}"))
+plot(Col4)
+# ## End(Not run)
+```
+
+
+
+
+```{r}
+Col1 <- gvisColumnChart(ethnic_plot, xvar="race_ethnicity", yvar=c("cases", "deaths"),
+                        options = list())
+plot(Col1)
+```
+
+
+
+
+```{r}
+## Please note that by default the googleVis plot command
+## will open a browser window and requires Flash and Internet
+## connection to display the visualisation.
+M1 <- gvisMotionChart(Fruits, idvar="Fruit", timevar="Year")
+
+M1
+
+## Not run: 
+# ## Usage of date variable
+# M2 <- gvisMotionChart(Fruits, idvar="Fruit", timevar="Date",
+#                       date.format = "\%Y\%m\%d") 
+#                       plot(M2)
+#                       
+# ## Display weekly data:
+# M3 <- gvisMotionChart(Fruits, "Fruit", "Date", date.format="\%YW\%W")
+# plot(M3) 
+# ## End(Not run)
+## Options: no side panel on the right
+M4 <- gvisMotionChart(Fruits,"Fruit", "Year",
+                      options=list(showSidePanel=FALSE))
+plot(M4)
+
+## Options: trails un-ticked
+M5 <- gvisMotionChart(Fruits, "Fruit", "Year",
+                      options=list(state='{"showTrails":false};'))
+                      
+plot(M5)
+
+## You can change some of displaying settings via the browser,
+## e.g. the level of opacity of non-selected items, or the chart type.
+## The state string from the 'Advanced' tab can be used to set those
+## settings via R. Just copy and past the string from the browser into
+## the argument state of the options list.
+## Here is an example of a motion chart, with an initial line chart
+## displayed. Ensure that you have a newline at the start and end of
+## your settings string.
+
+myStateSettings <-'
+{"xZoomedDataMin":1199145600000,"colorOption":"2",
+"duration":{"timeUnit":"Y","multiplier":1},"yLambda":1,
+"yAxisOption":"4","sizeOption":"_UNISIZE",
+"iconKeySettings":[],"xLambda":1,"nonSelectedAlpha":0,
+"xZoomedDataMax":1262304000000,"iconType":"LINE",
+"dimensions":{"iconDimensions":["dim0"]},
+"showTrails":false,"uniColorForNonSelected":false,
+"xAxisOption":"_TIME","orderedByX":false,"playDuration":15000,
+"xZoomedIn":false,"time":"2010","yZoomedDataMin":0,
+"yZoomedIn":false,"orderedByY":false,"yZoomedDataMax":100}
+'
+M6a <- gvisMotionChart(Fruits, "Fruit", "Year", 
+                       options=list(state=myStateSettings))
+plot(M6a)
+
+## Newline set explicitly
+myStateSettings <-'\n{"iconType":"LINE"}\n'
+M6b <- gvisMotionChart(Fruits, "Fruit", "Year", 
+                       options=list(state=myStateSettings))
+plot(M6b)
+
+
+## Define which columns are used for the initial setup of the various
+## dimensions
+M7 <- gvisMotionChart(Fruits, idvar="Fruit", timevar="Year",
+                      xvar="Profit", yvar="Expenses",
+                      colorvar="Location", sizevar="Sales")
+plot(M7)
+## For more information see:
+## https://developers.google.com/chart/interactive/docs/gallery/motionchart
+
+## See also the demo(WorldBank). It demonstrates how you can access
+## country level data from the World Bank to create Gapminder-like
+## plots.
+ 
+```
+
+
+
+
+
+
+```{r}
+df=data.frame(country=c("US", "GB", "BR"), val1=c(1,3,4), val2=c(23,12,32))
+
+## Area chart
+Area1 <- gvisAreaChart(ethnic_plot, xvar="race_ethnicity", yvar=c("cases", "deaths"),
+                       options=list(title="Ethnic Demographics",
+                          titleTextStyle="{color:'red',fontName:'Courier',fontSize:16}"))
+plot(Area1)
+
+## Stacked chart
+Area2 <- gvisAreaChart(df, xvar="country", yvar=c("val1", "val2"),
+      options=list(isStacked=TRUE))
+plot(Area2)
+
+
+## Add a customised title
+Area3 <- gvisAreaChart(df, xvar="country", yvar=c("val1", "val2"),
+             options=list(title="Hello World",
+                          titleTextStyle="{color:'red',fontName:'Courier',fontSize:16}"))
+plot(Area3)
+
+## Not run: 
+## Change y-axis to percentages
+Area3 <- gvisAreaChart(df, xvar="country", yvar=c("val1", "val2"),
+                       options=list(vAxis="{format:'#,###%'}"))
+plot(Area3)
+```
+
+
+
+
+
+```{r}
+lol <- gvisComboChart(sex_plot, xvar="sex", yvar=c("totalpositive2", "deaths"),
+                 options=list(title="Gender Demographic",
+                              explorer="{actions:['dragToZoom', 'rightClickToReset']}",
+                              titleTextStyle="{color:'black',
+                                              fontName:'Courier',
+                                              fontSize:16}",
+                              curveType="function", 
+                              pointSize=9,
+                              seriesType="bars",
+                              series="[{type:'line', 
+                                       targetAxisIndex:0,
+                                       color:'red'}, 
+                                      {type:'bars', 
+                                       targetAxisIndex:1,
+                                       color:'blue'}]",
+                              vAxes="[{title:'cases positive',
+                                      titleTextStyle: {color: 'red'},
+                                      textStyle:{color: 'black'},
+                                      textPosition: 'out'}, 
+                                     {title:'deaths',
+                                      format:'#,###',
+                                      titleTextStyle: {color: 'blue'},
+                                      textStyle:{color: 'blue'},
+                                      textPosition: 'out',
+                                      minValue:0}]",
+                              hAxes="[{title:'Gender',
+                                      textPosition: 'out'}]",
+                              width=1000, height=500
+                 ), 
+                 chartid="twoaxiscombochart"
+  )
+
+plot(lol)
+```
+
+
+```{r}
+tbl1 <- gvisTable(Population)
+plot(tbl1)
+
+## Table with enabled paging
+tbl2 <- gvisTable(Population, options=list(page='enable', height=300))
+
+plot(tbl2)
+```
+
 
