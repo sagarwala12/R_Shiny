@@ -112,7 +112,8 @@ sex_plot <- merge(sex_plota, sex_plotb, by = "sex")
 
 
 ###############################################
-#temp 
+#Create dataframe that can be indexed by County Name
+#Choice for select input 
 
 state_stat <- data.frame(county = rownames(cases_state), cases_state)
 rownames(cases_state) <- NULL

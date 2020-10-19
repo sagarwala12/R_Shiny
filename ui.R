@@ -64,6 +64,10 @@ shinyUI(dashboardPage(skin = "blue",
                                   box(htmlOutput('bar2'), width = "auto")
                                   
                                 ),
+                                h4('-As you can see from comparing data of males to females in California there very little difference in total infected'),
+                                h4('-Upon zooming in however you can see men die more than woman from the disease. Why is this?'),
+                                h4('-From research men have a tendencies to die much sooner than women. Men are more likely to die from other causes such as heart disease'),
+                                h4('- This could be the cause for the difference in the deaths'),
                                 br(),
                                 br(),
                                 br(),
@@ -76,7 +80,10 @@ shinyUI(dashboardPage(skin = "blue",
                                   box(htmlOutput('combo1'), width = "auto")
                                 
                                   ),
-                                h4('Why do Latinos suffer so much? - This is largely due to the fact that latinos predominately work in the service industry and tend to live in large family household setting'),
+                                h4('- Latinos have highest infection and death Percentage in California. Why is this?'),
+                                h4('- Most likely factor is that latino population are promintely in the service industry'),
+                                h4('- Latinos tend to live with lots of family members, more likely to come into contact and spread'),
+                                h4('- Like many other colored demographics in the US, less likely to have access to affordable healthcare'),
                                 br(),
                                 br(),
                                 br(),
@@ -90,6 +97,10 @@ shinyUI(dashboardPage(skin = "blue",
                                   box(htmlOutput('bar1'), width = "auto")
                                   
                                   ),
+                                h4('- As you can see right away, age group 18-49 is significantly higher in infection rate.'),
+                                h4('- This is most likely due to the fact that the younger part of this demographic are more likely to ignore social distancing rules and spread transmission '),
+                                h4('- Although 18-49 has a very high positive infection rate, upon zooming into the chart you can see that this group and younger have very little death toll.'),
+                                h4('- 65+ has a very high death toll compared to the other demographics, even though they have a signifcantly lower infection rate. '),
                                
                            
                                 
