@@ -5,6 +5,7 @@ output$line1 <- renderGvis({
                options = list(width= "1500", height = "500",
                               title = "COVID Testing progress in CA",
                               hAxis ="{title:'Dates'}",
+                              explorer="{actions:['dragToZoom', 'rightClickToReset']}",
                               vAxis="{title: 'total tested'}")
                )
   
