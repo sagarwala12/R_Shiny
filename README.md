@@ -42,4 +42,5 @@ Git hub Link: https://github.com/sagarwala12/R_Shiny
 ###Incomplete###
 - Visualization Map needs to be linked to data
 - addition of Hospital testing data
-- include all data sets on data tab 
+- Will rework UI to seperate data by each demographics, include additional data processing to show additional charts
+- normalize distributions to population rather than total sums/ averages 
